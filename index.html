@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08090b">
+<meta name="description" content="Local-first inspector for AI agent runs: what did the agent do, and what can we prove?">
+<title>AgentProof</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23ffc61a'/%3E%3Cpath d='M8 23 16 9l8 14' stroke='%230a0c0f' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./web/app.css">
+</head>
+<body>
+<div class="hazard" aria-hidden="true"></div>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">AP</div>
+      <div>
+        <div class="brand-name">AgentProof</div>
+        <div class="brand-sub label" data-i18n="brand.sub"></div>
+      </div>
+    </div>
+
+    <div class="topbar-spacer"></div>
+
+    <div class="live" id="live" data-state="busy" role="status" aria-live="polite">
+      <i aria-hidden="true"></i><span id="liveText" data-i18n="live.connecting"></span>
+    </div>
+
+    <div class="seg" role="group" aria-label="Language">
+      <button type="button" id="langZh" aria-pressed="false" title="中文">中文</button>
+      <button type="button" id="langEn" aria-pressed="false" title="English">EN</button>
+    </div>
+
+    <button type="button" class="btn btn--ghost clipped-sm" id="importBtn" data-i18n="btn.import"></button>
+    <button type="button" class="btn clipped-sm" id="refreshBtn" data-i18n="btn.refresh"></button>
+    <input id="file" type="file" accept=".json" hidden>
+  </header>
+
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="label" data-i18n="rail.sessions"></div>
+      <label class="search clipped-sm">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <input id="search" type="search" autocomplete="off" spellcheck="false"
+               data-i18n-placeholder="search.placeholder" aria-label="Search sessions">
+      </label>
+      <div class="rail-filters" id="railFilters"></div>
+    </div>
+    <div class="rail-list">
+      <div class="rail-count" id="railCount"></div>
+      <div id="railList"></div>
+    </div>
+  </aside>
+
+  <main class="main" id="main" tabindex="-1">
+    <div class="main-inner" id="mainInner"></div>
+  </main>
+</div>
+
+<script src="./web/app.js"></script>
+</body>
+</html>

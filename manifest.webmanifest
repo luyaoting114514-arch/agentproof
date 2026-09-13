@@ -1,0 +1,10 @@
+{
+  "name": "AgentProof",
+  "short_name": "AgentProof",
+  "description": "Local-first inspector for AI agent runs.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#08090b",
+  "theme_color": "#08090b",
+  "icons": []
+}

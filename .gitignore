@@ -1,0 +1,9 @@
+node_modules/
+dist/
+out/
+*.log
+agentproof-report.json
+agentproof-*.html
+.DS_Store
+Thumbs.db
+.probe.txt

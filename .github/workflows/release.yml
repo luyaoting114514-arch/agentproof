@@ -1,0 +1,58 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            target: win
+            artifact: '*.exe'
+          - os: macos-latest
+            target: mac
+            artifact: '*.dmg'
+          - os: ubuntu-latest
+            target: linux
+            artifact: '*.AppImage'
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # The engine itself has zero dependencies; this install is only for the
+      # Electron shell that produces the installers.
+      - run: npm install
+
+      - name: Build installers
+        run: npm run dist:${{ matrix.target }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Attach artifacts to the release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/${{ matrix.artifact }}
+          generate_release_notes: true
+
+      - name: Keep artifacts when run manually
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: agentproof-${{ matrix.os }}
+          path: |
+            dist/${{ matrix.artifact }}
+          if-no-files-found: ignore

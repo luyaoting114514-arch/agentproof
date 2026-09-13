@@ -1,0 +1,49 @@
+{
+  "name": "agentproof",
+  "version": "0.2.0",
+  "description": "Local-first inspector for AI agent runs: what did the agent do, and what can we prove?",
+  "license": "MIT",
+  "type": "module",
+  "main": "electron-main.cjs",
+  "bin": { "agentproof": "agentproof.mjs" },
+  "engines": { "node": ">=18" },
+  "files": [
+    "agentproof.mjs",
+    "lib/",
+    "web/",
+    "index.html",
+    "manifest.webmanifest",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "serve": "node agentproof.mjs serve --open",
+    "scan": "node agentproof.mjs scan",
+    "ls": "node agentproof.mjs ls",
+    "desktop": "electron .",
+    "portable": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win nsis",
+    "dist:mac": "electron-builder --mac dmg",
+    "dist:linux": "electron-builder --linux AppImage"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^36.4.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.agentproof.desktop",
+    "productName": "AgentProof",
+    "files": ["index.html", "electron-main.cjs", "manifest.webmanifest", "lib/**", "web/**", "agentproof.mjs"],
+    "directories": { "output": "dist" },
+    "win": { "target": ["nsis"] },
+    "mac": { "target": ["dmg"] },
+    "linux": { "target": ["AppImage"] },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  }
+}
